@@ -16,6 +16,8 @@
  * DAC: DAC8830
  * 
  * NB: Unipolar, signal must be 0-5v
+ * 
+ * NB: Slightly unstable when delay is too short. Works as a PoC though, so I haven't tried to figure out what is going on.
  */
 
 #include <SPI.h>
@@ -108,8 +110,9 @@ void loop()
   bitsToRemove = 16 - bits;
 
   // leave at least one bit...
+  // Removing 1 to 4 bits will not have any effect as long as we use a 12 bit ADC...
   if(bitsToRemove == 16) {
-    bitsToRemove = 15
+    bitsToRemove = 15;
   }
   
   // set compare match register to change sample rate
